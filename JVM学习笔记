@@ -1,0 +1,11 @@
+JVM学习笔记
+
+1、内存分配
+	Eden区域优先分配空间
+	大对象直接进入老年代（-XX:PretenureSizeThreshold=8M)
+	长期存活的对象存放老年代（-XX: MaxTenuringThreshold=7) 在JDK7以后这个标准不一定稳定执行可能2次以后就回收了
+	空间分配担保 -XX:+/-HandlePromotionFailure  +标识开启 -标识禁用 jdk6之后默认开启 但是不同的垃圾回收器 开启的策略有所不同比如：SerialGC 和 ParNewGC等不同的策略
+	SerialGC会在Eden区域无法分配空间时启动担保，执行Minor GC 回收Eden区域垃圾。 ParNew及Parallel则判断对象空间是否>Eden/2。若大于则直接丢入Old区域
+	否则执行MinorGC回收Eden区域并在Eden区域为该对象开辟空间。
+	
+	
